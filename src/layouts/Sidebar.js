@@ -14,7 +14,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
     const { Sider } = Layout;
     const history = useNavigate();
     const handleMenu = title => {
-        history(`${title}`);
+        history(title);
     }
     const theme = 'dark';
     return (

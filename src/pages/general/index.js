@@ -18,13 +18,11 @@ export default function Index() {
                         </div>
                     </Header>
                     <Content style={{ margin: '24px 16px', padding: 24, minHeight: "calc(100vh - 114px)", background: "#fff" }}>
-                        <>
                         <Routes>
                             <Route path="registro" element={<Registrar />} />
                             <Route path="donadores" element={<Registrar />} />
                             <Route path="reportes" element={<Registrar />} />
                         </Routes>
-                        </>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Sistema VIDAS 1.0.0 © 2021</Footer>
                 </Layout>
