@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Layout } from 'antd';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from '../../layouts/Sidebar';
-import Registrar from '../../components/formulario/Registrar';
-import Registros from '../../components/registros/Registros';
-import Reportes from '../../components/reportes/Reportes';
-
+import Registrar from '../../components/formulario/registrar';
+import Registros from '../../components/registros/registros';
+import Reportes from '../../components/reportes/reportes';
 export default function Index() {
     const { Header, Content, Footer } = Layout;
     const [collapsed, setCollapsed] = useState(false);
