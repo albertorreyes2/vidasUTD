@@ -11,13 +11,14 @@ export default function Index() {
             <Layout style={{ minHeight: '100vh' }}>
                 <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
                 <Layout>
-                    <Header style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: theme === "light" ? "#fff" : "" }}>
+                    {/* <Header style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: theme === "light" ? "#fff" : "" }}>
                         <div>
                             <h2 className="text-white" style={{ color: 'white' }}>Administrador</h2>
                         </div>
-                    </Header>
+                    </Header> */}
                     <Content style={{ margin: '24px 16px', padding: 24, minHeight: "calc(100vh - 114px)", background: "#fff" }}>
                         <Routes>
+                            <Route path="/" element={<Registrar />} />
                             <Route path="registro" element={<Registrar />} />
                             <Route path="donadores" element={<Registrar />} />
                             <Route path="reportes" element={<Registrar />} />

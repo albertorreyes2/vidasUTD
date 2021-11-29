@@ -23,6 +23,7 @@ import { UploadOutlined, SaveOutlined, LoadingOutlined, CheckCircleOutlined } fr
 import Swal from "sweetalert2";
 import axios from "axios";
 import moment from "moment";
+import { useGetRequest } from "../../hooks";
 
 const layout = {
     labelCol: { span: 16 },
@@ -38,33 +39,45 @@ export default function Registrar() {
     const [loading, setLoading] = useState(false);
     const initialState = "";
     const [result, setResult] = useState([]);
-    const [carreras, setCarreras] = useState([])
-    const [uni, setUni] = useState([])
+    const {data: carreras} = useGetRequest('/carreras/getCarreras');
+    const {data: uni} = useGetRequest('/universidades/getUniversidades');
+    const [phoneVal, setPhoneVal] = useState({resp_tel: '', cel: ''})
     const handleUni = () => {
     }
 
     useEffect(() => {
         setForm({ ...form, anio_campana: moment().year() })
-        axios.get(`/carreras/getCarreras`).then(res => { setCarreras(res.data.result) });
-        axios.get(`/universidades/getUniversidades`).then(res => { setUni(res.data.result) });
     }, [])
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [])
 
+    console.log('form', form)
     // const validations = (e) => {
     //     let {
     //         nombre, apellido_p, apellido_m, correo, fecha_nacimiento, cel, estudiante, matricula, resp_nombre, resp_tel, tipo_sangre
     //     } = form;
     // }
 
+    const handlePhoneNumber = (phone, type) => {
+        setPhoneVal({...phoneVal, [type]: 'validating'})
+        const regex = /^\d{10}$/;
+        if(regex.test(phone)) {
+            setPhoneVal({[type]: 'success'})
+            setForm({...form, [type]: phone})
+        } else {
+            setPhoneVal({[type]: 'error'})
+        }
+
+    }
+
     const handleSearch = (value) => {
         let res = [];
         if (!value || value.indexOf('@') >= 0) {
             res = [];
         } else {
-            res = ['utd.edu.mx', 'gmail.com', 'hotmail.com']
+            res = ['utd.edu.mx', 'gmail.com', 'hotmail.com', 'outlook.com']
                 .map((domain) => `${value}@${domain}`);
         }
         setResult(res);
@@ -76,6 +89,7 @@ export default function Registrar() {
             .then(function (response) {
                 if (response.data.ok) {
                     setForm({});
+                    setPhoneVal({cel: '', resp_tel: ''})
                     Swal.fire('Nuevo predonante')
                     formulario.resetFields();
                     setLoading(false)
@@ -182,11 +196,10 @@ export default function Registrar() {
                             label="Número de teléfono"
                             name="cel"
                             rules={[{ required: true, message: 'Por favor ingresa el número de teléfono' }]}
+                            hasFeedback validateStatus={phoneVal.cel}
                         >
-                            <InputNumber style={{ width: "100%", marginRight: "1rem" }}
-                                onChange={(e) => {
-                                    setForm({ ...form, cel: e })
-                                }} />
+                            <Input style={{ width: "100%", marginRight: "1rem" }} 
+                                onChange={(e) => handlePhoneNumber(e.target.value, 'cel' )} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -205,7 +218,7 @@ export default function Registrar() {
 
                     <Col span={8}>
                         <Form.Item name="tipo_sangre" label="Tipo de sangre" rules={[{ required: true, message: 'Selecciona un campo' }]}>
-                            <Select>
+                            <Select onChange={selectedOption => setForm({...form, tipo_sangre: selectedOption})}>
                                 <Select.Option value="O+">O+</Select.Option>
                                 <Select.Option value="A+">A+</Select.Option>
                                 <Select.Option value="B+">B+</Select.Option>
@@ -215,22 +228,21 @@ export default function Registrar() {
                                 <Select.Option value="AB-">AB-</Select.Option>
                                 <Select.Option value="O-">O-</Select.Option>
                                 <Select.Option value="Desconocida">Desconocida</Select.Option>
-                            </Select>      </Form.Item>
+                            </Select>      
+                        </Form.Item>
                     </Col>
                 </Row>
                 {form.estudiante === 1 &&
                     <Row justify="center" gutter={[8, 8]}>
                         <Col span={6}>
-                            <Form.Item name="universidad" onClick={handleUni} label="Universidad" rules={[{ required: true, message: 'Selecciona un campo' }]}>
+                            <Form.Item name="universidad" label="Universidad" rules={[{ required: true, message: 'Selecciona un campo' }]}>
                                 <Select
-                                    placeholder="Selecciona un opcíon"
+                                    placeholder="Selecciona una universidad"
                                     onChange={(uni) => {
                                         setForm({ ...form, id_universidad: uni });
                                     }}
                                 >
-                                    {uni.map(x => {
-                                        return <Option value={x.id}>{x.nombre}</Option>
-                                    })}
+                                    {uni.map(uni =>  <Option value={uni.id}>{uni.nombre}</Option>)}
                                 </Select>
                             </Form.Item>
 
@@ -239,21 +251,19 @@ export default function Registrar() {
                             <Form.Item name="carrera" label="Carrera" rules={[{ required: true, message: 'Selecciona un campo' }]}>
 
                                 <Select
-                                    placeholder="Selecciona un opcíon"
+                                    placeholder="Selecciona una carrera"
                                     onChange={(carrera) => {
                                         setForm({ ...form, id_carrera: carrera });
                                     }}>
-                                    {carreras.map(x => {
-                                        return <Option value={x.id}>{x.nombre}</Option>
-                                    })}
+                                    {carreras.map(x => <Option value={x.id}>{x.nombre}</Option>)}
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col span={5}>
                             <Form.Item
-                                label="Matricula"
+                                label="Matrícula"
                                 name="matricula"
-                                rules={[{ required: true, message: 'Por favor ingresa la matricula' }]}
+                                rules={[{ required: true, message: 'Por favor ingresa la matrícula' }]}
                             >
                                 <Input onChange={(e) => {
                                     setForm({ ...form, matricula: e.target.value })
@@ -264,21 +274,19 @@ export default function Registrar() {
                 }
                 <Row justify="left" gutter={[8, 8]}>
                     <Divider orientation="left">
-                        <h3>Contacto de emergencia</h3>
+                        <h3>Contacto en caso de emergencia</h3>
                     </Divider>
                 </Row>
                 <Row justify="center" gutter={[8, 8]}>
                     <Col span={8}>
-                        <Form.Item name="resp_nombre" label="Contacto de emergencia" rules={[{ required: true, message: 'Selecciona un campo' }]}>
-                            <Input onChange={(e) => {
-                                setForm({ ...form, nombre: e.target.value })
-                            }} />
+                        <Form.Item name="resp_nombre" label="Nombre del responsable" rules={[{ required: true, message: 'Selecciona un campo' }]}>
+                            <Input onChange={(e) => setForm({ ...form, resp_nombre: e.target.value })} />
                         </Form.Item>
 
                     </Col>
                     <Col span={8}>
-                        <Form.Item name="resp_tel" label="Teléfono de contacto" rules={[{ required: true, message: 'Selecciona un campo' }]}>
-                            <InputNumber style={{ width: "100%", marginRight: "1rem" }} />
+                        <Form.Item name="resp_tel" label="Teléfono de contacto" hasFeedback validateStatus={phoneVal.resp_tel} rules={[{ required: true, message: 'Selecciona un campo' }]}>
+                            <Input style={{ width: "100%", marginRight: "1rem" }} onChange={(e) => handlePhoneNumber(e.target.value, 'resp_tel' )} />
                         </Form.Item>
                     </Col>
                 </Row>
