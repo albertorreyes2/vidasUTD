@@ -3,6 +3,8 @@ import { Layout } from 'antd';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from '../../layouts/Sidebar';
 import Registrar from '../../components/formulario/Registrar';
+import Registros from '../../components/registros/Registros';
+import Reportes from '../../components/reportes/Reportes';
 
 export default function Index() {
     const { Header, Content, Footer } = Layout;
@@ -20,8 +22,8 @@ export default function Index() {
                     <Content style={{ margin: '24px 16px', padding: 24, minHeight: "calc(100vh - 114px)", background: "#fff" }}>
                         <Routes>
                             <Route path="registro" element={<Registrar />} />
-                            <Route path="donadores" element={<Registrar />} />
-                            <Route path="reportes" element={<Registrar />} />
+                            <Route path="donadores" element={<Registros />} />
+                            <Route path="reportes" element={<Reportes />} />
                         </Routes>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Sistema VIDAS 1.0.0 © 2021</Footer>
