@@ -6,6 +6,8 @@ import {
 } from '@ant-design/icons';
 import moment from 'moment';
 import 'moment/locale/es-us';
+import logo from '../images/logo_vidas_negro128.png'
+import logo2 from '../images/logo_vidas_solo.png'
 
 
 export default function Sidebar({ collapsed, setCollapsed }) {
@@ -37,7 +39,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
 
             <div style={{
                 height: 64,
-                // backgroundImage: `url(${collapsed ? logo2 : logo})`,
+                backgroundImage: `url(${collapsed ? logo2 : logo})`,
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 filter: theme === "dark" && "invert(1) brightness(200%)"
