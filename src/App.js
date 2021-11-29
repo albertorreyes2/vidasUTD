@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
-import Index from './pages/general/Index';
+import Index from './pages/general/index';
 import 'antd/dist/antd.css';
 
 
