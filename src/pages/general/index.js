@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from '../../layouts/Sidebar';
 import Registrar from '../../components/formulario/registrar';
-import Registros from '../../components/registros/registros';
+import Registros from '../../components/donadores/Donadores';
 import Reportes from '../../components/reportes/reportes';
 export default function Index() {
     const { Header, Content, Footer } = Layout;
