@@ -3,6 +3,7 @@ import {
     Table, Divider, Tabs, Select, Button
 } from "antd";
 import axios from "axios";
+import { generarConstancia } from "./generarConstancia";
 
 
 export default function Registros() {
@@ -10,6 +11,7 @@ export default function Registros() {
     const [donantes, setDonantes] = useState([])
     const [camps, setCamps] = useState([])
     const [form, setForm] = useState([])
+    const [nombre, setNombre] = useState("")
     useEffect(() => {
         axios.get(`/campaign/getCamps`).then(res => { setCamps(res.data.result) });
     }, [])
@@ -33,14 +35,14 @@ export default function Registros() {
             key: 'id',
             render: (e, record) => (
                 <>
-                    <Button type="primary" onClick={updPredonante(e)}>Generar constancia</Button>
+                    <Button type="primary" onClick={() => updPredonante(setNombre(record.nombre))}>Generar constancia</Button>
                 </>
             ),
         },
     ];
 
-    const updPredonante = (e) => {
-
+    const updPredonante = () => {
+        generarConstancia(nombre.toString())
     }
     const generatePreDon = (e) => {
         axios.get(`/donadores/getDonadores?idCampana=${e}&si_dono=${0}`).then(res => { setPreDon(res.data.result) });
