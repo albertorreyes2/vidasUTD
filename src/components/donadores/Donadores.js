@@ -29,80 +29,34 @@ import axios from "axios";
 import moment from "moment";
 import { useGetRequest } from "../../hooks";
 import TablaDonadores from "./TablaDonadores";
+import { useStateValue } from "../../providers/StateProvider";
 
-
+const { Title } = Typography;
+const { Option } = Select;
 export default function Donadores() {
 
     const [idCampana, setIdCampana] = useState(1);
-    const { data: donadores } = useGetRequest(`/donadores/getDonadores?idCampana=${idCampana}`, [idCampana]);
-    
+    const [campSelected, setCampSelected] = useState(false);
+    const [{triggerReloadDonadores}, dispatch] = useStateValue();
 
-    console.log(donadores);
+    const { data: campanas } = useGetRequest(`/campaign/getCamps`, []);
+    const { data: donadores } = useGetRequest(`/donadores/getDonadores?idCampana=${idCampana}`, [idCampana, triggerReloadDonadores]);
 
-
-    const columns = [
-        {
-            title: "Donante",
-            dataIndex: "si_dono",
-            key: "donante",
-            render: (record) => (
-                <Tag color={record === 1 ? 'green' : 'red'}>{record === 1 ? 'Sí' : 'No'}</Tag>
-            )
-        },
-        {
-            title: "Tipo de sangre",
-            dataIndex: "tipo_sangre",
-            key: "tipo_sangre",
-        },
-        {
-            title: "Nombre",
-            dataIndex: "nombre",
-            key: "nombre",
-        },
-        {
-            title: "Fecha nacimiento",
-            dataIndex: "fecha_nacimiento",
-            key: "fecha_nacimiento",
-            render: (text) => moment.utc(text).format("DD/MM/YYYY"),
-        },
-        {
-            title: "Correo",
-            dataIndex: "correo",
-            key: "correo",
-        },
-        {
-            title: "Nombre del responsable",
-            dataIndex: "resp_nombre",
-            key: "resp_nombre",
-        },
-        {
-            title: "Tel. del responsable",
-            dataIndex: "resp_tel",
-            key: "resp_tel",
-        },
-        {
-            title: "Universidad",
-            dataIndex: "universidad",
-            key: "universidad",
-        },
-        {
-            title: "Carrera",
-            dataIndex: "carrera",
-            key: "carrera",
-        },
-        {
-            title: "Acción",
-            dataIndex: "",
-            key: "accion",
-            render: (record) => (
-                <CheckCircleOutlined />
-            )
-        },
-
-    ];
 
     return (
         <>
+            <div style={{ width: '100%', margin: '0 auto' }}>
+                <Title level={2}>¿Qué campaña deseas consultar?</Title>
+                <Select style={{ width: 450 }} placeholder='Selecciona una opción' onChange={(camp) => {
+                    console.log('camp', camp);
+                    setIdCampana(camp);
+                    setCampSelected(true);
+                }}>
+                    {campanas.map(campana => (
+                        <Option key={campana.id} value={campana.id}>{campana.nombre}</Option>
+                    ))}
+                </Select>
+            </div>
             <Divider>
                 <h3>Reporte de donantes y pre-donantes</h3>
             </Divider>
@@ -114,13 +68,12 @@ export default function Donadores() {
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Donantes" key="2">
                     <div style={{ marginTop: '30px' }}>
-                        <TablaDonadores donadores={donadores.filter(donador => donador.si_dono === 1)} tipo='donante'/>
+                        <TablaDonadores donadores={donadores.filter(donador => donador.si_dono === 1)} tipo='donante' />
                     </div>
                 </Tabs.TabPane>
             </Tabs>
-
-
         </>
+           
     )
 
 }
