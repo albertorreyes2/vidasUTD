@@ -19,13 +19,16 @@ import {
     AutoComplete,
     Modal,
     Progress,
-    Tag
+    Tabs,
+    Tag,
+    Space
 } from "antd";
 import { CheckCircleFilled, CheckCircleOutlined } from "@ant-design/icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import moment from "moment";
 import { useGetRequest } from "../../hooks";
+import TablaDonadores from "./TablaDonadores";
 
 export default function Donadores() {
 
@@ -92,21 +95,28 @@ export default function Donadores() {
                 <CheckCircleOutlined />
             )
         },
-        
+
     ];
 
     return (
         <>
             <Divider>
-                <h3>Reporte de donadores y pre-donadores</h3>
+                <h3>Reporte de donantes y pre-donantes</h3>
             </Divider>
+            <Tabs type="card">
+                <Tabs.TabPane tab="Pre-donantes" key="1">
+                    <div style={{ marginTop: '30px' }}>
+                        <TablaDonadores donadores={donadores.filter(donador => donador.si_dono === 0)} />
+                    </div>
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Donantes" key="2">
+                    <div style={{ marginTop: '30px' }}>
+                        <TablaDonadores donadores={donadores.filter(donador => donador.si_dono === 1)} />
+                    </div>
+                </Tabs.TabPane>
+            </Tabs>
 
-            <Table
-                style={{ overflow: "auto", cursor: "pointer" }}
-                columns={columns}
-                dataSource={donadores}
-                rowKey="id"
-            />
+
         </>
     )
 
