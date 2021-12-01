@@ -106,7 +106,7 @@ export default function Registrar() {
     return (
         <>
             <Divider>
-                <h3>Hoja de registro</h3>
+                <Typography.Title level={3}>Hoja de registro</Typography.Title>
             </Divider>
             <Form
                 {...layout}

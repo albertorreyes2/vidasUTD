@@ -38,28 +38,28 @@ export default function Reportes() {
   let labelBCD = bcd?.map((nom) => nom.nombre)
   let dataBCD = bcd?.map((amount) => amount.amount)
 
-  const chartByPreDon = {
-    data: {
-      labels: data.map((e) => e),
-      datasets: [
-        {
-          data: data.map((e) => e.predonantes),
-          backgroundColor: [
-            "#1a535c",
-            "#4ecdc4",
-          ],
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: false,
-        },
-      }
-    },
-  };
+  // const chartByPreDon = {
+  //   data: {
+  //     labels: data.map((e) => e),
+  //     datasets: [
+  //       {
+  //         data: data.map((e) => e.predonantes),
+  //         backgroundColor: [
+  //           "#1a535c",
+  //           "#4ecdc4",
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   options: {
+  //     responsive: true,
+  //     plugins: {
+  //       legend: {
+  //         display: false,
+  //       },
+  //     }
+  //   },
+  // };
   const ByBloodType = {
     data: {
       labels: labelBT,
@@ -180,7 +180,6 @@ export default function Reportes() {
       }
     },
   };
-
   const ByCarrDon = {
     data: {
       labels: labelBCD,
@@ -213,11 +212,10 @@ export default function Reportes() {
   return (
     <>
       <Divider>
-        <h3>Reportes</h3>
+        <Typography.Title level={3}>Reportes</Typography.Title>
       </Divider>
       <div className="card-container">
-
-        <Typography.Title level={2}>¿Qué campaña deseas consultar?</Typography.Title>
+        <Typography.Title level={5}>¿Qué campaña deseas consultar?</Typography.Title>
         <Select style={{ width: 450 }} defaultValue={campanas[0]?.id || 1} placeholder='Selecciona una opción' onChange={(camp) => {
           console.log('camp', camp);
           setIdCampana(camp);
@@ -231,18 +229,18 @@ export default function Reportes() {
             <Typography.Title level={4} style={titleStyle}>
               Donantes vs. Pre donantes
             </Typography.Title>
-            <div style={{ width: '80%' }} >
-              <Bar
+            <div  >
+              {/* <Bar
                 data={chartByPreDon.data}
                 options={chartByPreDon.options}
-              />
+              /> */}
             </div>
           </Col>
           <Col span={9}>
             <Typography.Title level={4} style={titleStyle}>
               Por tipo de sangre
             </Typography.Title>
-            <div style={{ width: '80%' }} >
+            <div  >
               <Bar
                 data={ByBloodType.data}
                 options={ByBloodType.options}
@@ -255,7 +253,7 @@ export default function Reportes() {
             <Typography.Title level={4} style={titleStyle}>
               Estudiantes donadores
             </Typography.Title>
-            <div style={{ width: '80%' }} >
+            <div  >
               <Bar
                 data={ByStForDon.data}
                 options={ByStForDon.options}
@@ -266,7 +264,7 @@ export default function Reportes() {
             <Typography.Title level={4} style={titleStyle}>
               Estudiantes PreFonadores
             </Typography.Title>
-            <div style={{ width: '80%' }} >
+            <div  >
               <Bar
                 data={ByStForPreDon.data}
                 options={ByStForPreDon.options}
@@ -279,7 +277,7 @@ export default function Reportes() {
             <Typography.Title level={4} style={titleStyle}>
               Universidades Predonadores
             </Typography.Title>
-            <div style={{ width: '80%' }} >
+            <div  >
               <Bar
                 data={ByUniPreDon.data}
                 options={ByUniPreDon.options}
@@ -290,7 +288,7 @@ export default function Reportes() {
           <Typography.Title level={4} style={titleStyle}>
               Universidades donadores
             </Typography.Title>
-            <div style={{ width: '80%' }} >
+            <div  >
               <Bar
                 data={ByUniDon.data}
                 options={ByUniDon.options}
@@ -303,7 +301,7 @@ export default function Reportes() {
             <Typography.Title level={4} style={titleStyle}>
               Donadores por carrera
             </Typography.Title>
-            <div style={{ width: '80%' }} >
+            <div  >
               <Bar
                 data={ByCarrDon.data}
                 options={ByCarrDon.options}

@@ -37,7 +37,7 @@ export default function Donadores() {
 
     const [idCampana, setIdCampana] = useState(1);
     const [campSelected, setCampSelected] = useState(false);
-    const [{triggerReloadDonadores}, dispatch] = useStateValue();
+    const [{ triggerReloadDonadores }, dispatch] = useStateValue();
 
     const { data: campanas } = useGetRequest(`/campaign/getCamps`, []);
     const { data: donadores } = useGetRequest(`/donadores/getDonadores?idCampana=${idCampana}`, [idCampana, triggerReloadDonadores]);
@@ -46,8 +46,11 @@ export default function Donadores() {
 
     return (
         <>
+            <Divider>
+                <Typography.Title level={3}>Reporte de donantes y pre-donantes</Typography.Title>
+            </Divider>
             <div style={{ width: '100%', margin: '0 auto' }}>
-                <Title level={2}>¿Qué campaña deseas consultar?</Title>
+                <Title level={5}>¿Qué campaña deseas consultar?</Title>
                 <Select style={{ width: 450 }} defaultValue={campanas[0]?.id || 1} placeholder='Selecciona una opción' onChange={(camp) => {
                     console.log('camp', camp);
                     setIdCampana(camp);
@@ -58,9 +61,6 @@ export default function Donadores() {
                     ))}
                 </Select>
             </div>
-            <Divider>
-                <h3>Reporte de donantes y pre-donantes</h3>
-            </Divider>
             <Tabs type="card">
                 <Tabs.TabPane tab="Pre-donantes" key="1">
                     <div style={{ marginTop: '30px' }}>
@@ -74,7 +74,7 @@ export default function Donadores() {
                 </Tabs.TabPane>
             </Tabs>
         </>
-           
+
     )
 
 }
