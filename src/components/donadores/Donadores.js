@@ -30,12 +30,15 @@ import moment from "moment";
 import { useGetRequest } from "../../hooks";
 import TablaDonadores from "./TablaDonadores";
 
+
 export default function Donadores() {
 
     const [idCampana, setIdCampana] = useState(1);
     const { data: donadores } = useGetRequest(`/donadores/getDonadores?idCampana=${idCampana}`, [idCampana]);
+    
 
     console.log(donadores);
+
 
     const columns = [
         {
@@ -106,12 +109,12 @@ export default function Donadores() {
             <Tabs type="card">
                 <Tabs.TabPane tab="Pre-donantes" key="1">
                     <div style={{ marginTop: '30px' }}>
-                        <TablaDonadores donadores={donadores.filter(donador => donador.si_dono === 0)} />
+                        <TablaDonadores donadores={donadores.filter(donador => donador.si_dono === 0)} tipo='predonante' />
                     </div>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Donantes" key="2">
                     <div style={{ marginTop: '30px' }}>
-                        <TablaDonadores donadores={donadores.filter(donador => donador.si_dono === 1)} />
+                        <TablaDonadores donadores={donadores.filter(donador => donador.si_dono === 1)} tipo='donante'/>
                     </div>
                 </Tabs.TabPane>
             </Tabs>

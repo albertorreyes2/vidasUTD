@@ -1,12 +1,13 @@
 import { Button, Table, Tag } from 'antd';
 import { CheckCircleFilled, CheckCircleOutlined } from "@ant-design/icons";
-
 import moment from "moment";
 
+import { generarConstancia } from "../registros/generarConstancia";
+import { useEffect, useState } from 'react';
 
-export default function TablaDonadores({ donadores }) {
 
-    const columns = [
+export default function TablaDonadores({ donadores, tipo }) {
+    const [columns, setColumns] = useState([
         {
             title: "Tipo de sangre",
             dataIndex: "tipo_sangre",
@@ -48,16 +49,24 @@ export default function TablaDonadores({ donadores }) {
             dataIndex: "resp_tel",
             key: "resp_tel",
         },
-        {
-            title: "Acción",
-            dataIndex: "",
-            key: "accion",
-            render: (record) => (
-                <Button type="primary" shape="round" size='middle' ghost> Generar constancia </Button>
-            )
-        },
 
-    ];
+    ]);
+
+    useEffect(() => {
+        if (tipo === 'predonante') {
+            setColumns([...columns,
+            {
+                title: "Acción",
+                dataIndex: "",
+                key: "accion",
+                render: (record) => (
+                    <Button type="primary" shape="round" size='middle' ghost onClick={() => generarConstancia(record.nombre)}> Generar constancia </Button>
+                )
+            }])
+        }
+    }, [tipo])
+
+
 
 
     return (
