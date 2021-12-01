@@ -42,12 +42,13 @@ export default function Donadores() {
     const { data: campanas } = useGetRequest(`/campaign/getCamps`, []);
     const { data: donadores } = useGetRequest(`/donadores/getDonadores?idCampana=${idCampana}`, [idCampana, triggerReloadDonadores]);
 
+    console.log('campanas', campanas);
 
     return (
         <>
             <div style={{ width: '100%', margin: '0 auto' }}>
                 <Title level={2}>¿Qué campaña deseas consultar?</Title>
-                <Select style={{ width: 450 }} placeholder='Selecciona una opción' onChange={(camp) => {
+                <Select style={{ width: 450 }} defaultValue={campanas[0]?.id || 1} placeholder='Selecciona una opción' onChange={(camp) => {
                     console.log('camp', camp);
                     setIdCampana(camp);
                     setCampSelected(true);

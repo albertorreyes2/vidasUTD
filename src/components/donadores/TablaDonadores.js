@@ -166,7 +166,7 @@ export default function TablaDonadores({ donadores, tipo }) {
                 dataIndex: "",
                 key: "accion",
                 render: (record) => (
-                    <Button type="primary" shape="round" size='middle' ghost onClick={() => updateDonadorAndGenPdf(record)}> Generar constancia </Button>
+                    <Button key={`button-${record.id}`} type="primary" shape="round" size='middle' ghost onClick={() => updateDonadorAndGenPdf(record)}> Generar constancia </Button>
                 )
             }])
         }
