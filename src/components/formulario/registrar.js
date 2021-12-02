@@ -34,7 +34,7 @@ export default function Registrar() {
     const { Title, Text } = Typography;
     const { Option } = Select;
     const dateFormat = "DD/MM/YYYY";
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({anio_campana: moment().year()});
     const [formulario] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const initialState = "";
@@ -44,10 +44,6 @@ export default function Registrar() {
     const [phoneVal, setPhoneVal] = useState({resp_tel: '', cel: ''})
     const handleUni = () => {
     }
-
-    useEffect(() => {
-        setForm({ ...form, anio_campana: moment().year() })
-    }, [])
 
     useEffect(() => {
         window.scrollTo(0, 0);

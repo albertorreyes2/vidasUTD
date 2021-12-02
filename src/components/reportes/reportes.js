@@ -251,7 +251,7 @@ export default function Reportes() {
         <Row gutter={[8, 24]} justify="center">
           <Col span={9}>
             <Typography.Title level={4} style={titleStyle}>
-              Estudiantes donadores
+              Estudiantes donantes
             </Typography.Title>
             <div  >
               <Bar
@@ -262,7 +262,7 @@ export default function Reportes() {
           </Col>
           <Col span={9}>
             <Typography.Title level={4} style={titleStyle}>
-              Estudiantes PreFonadores
+              Estudiantes Predonantes
             </Typography.Title>
             <div  >
               <Bar
@@ -275,7 +275,7 @@ export default function Reportes() {
         <Row gutter={[8, 24]} justify="center">
           <Col span={9}>
             <Typography.Title level={4} style={titleStyle}>
-              Universidades Predonadores
+              Predonantes por universidad
             </Typography.Title>
             <div  >
               <Bar
@@ -285,8 +285,8 @@ export default function Reportes() {
             </div>
           </Col>
           <Col span={9}>
-          <Typography.Title level={4} style={titleStyle}>
-              Universidades donadores
+            <Typography.Title level={4} style={titleStyle}>
+              Donantes por universidad
             </Typography.Title>
             <div  >
               <Bar
@@ -308,7 +308,7 @@ export default function Reportes() {
               />
             </div>
           </Col>
-          </Row>
+        </Row>
       </div>,
     </>
   );
