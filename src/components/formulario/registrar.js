@@ -84,7 +84,7 @@ export default function Registrar() {
         axios.post("/donador/newDonador", form)
             .then(function (response) {
                 if (response.data.ok) {
-                    setForm({});
+                    setForm({anio_campana: moment().year()});
                     setPhoneVal({cel: '', resp_tel: ''})
                     Swal.fire('Nuevo predonante')
                     formulario.resetFields();
