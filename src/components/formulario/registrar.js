@@ -86,13 +86,23 @@ export default function Registrar() {
                 if (response.data.ok) {
                     setForm({anio_campana: moment().year()});
                     setPhoneVal({cel: '', resp_tel: ''})
-                    Swal.fire('Nuevo predonante')
-                    formulario.resetFields();
-                    setLoading(false)
+                    Swal.fire({
+                        title: "¡Éxito!",
+                        text: "Predonante registrado correctamente.",
+                        icon: "success",
+                    }).then(() => {
+                        formulario.resetFields();
+                        setLoading(false)
+                    });
 
                 } else {
-                    Swal.fire('No hay predonante')
-                    setLoading(false)
+                    Swal.fire({
+                        title: "¡Ups!",
+                        text: "Ocurrió un error al intentar registrar al predonante, inténtalo de nuevo.",
+                        icon: "error",
+                    }).then(() => {
+                        setLoading(false)
+                    });
                 }
             }
             )

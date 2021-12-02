@@ -51,7 +51,7 @@ export default function Donadores() {
             </Divider>
             <div style={{ width: '100%', margin: '0 auto' }}>
                 <Title level={5}>¿Qué campaña deseas consultar?</Title>
-                <Select style={{ width: 450 }} defaultValue={campanas[0]?.id || 1} placeholder='Selecciona una opción' onChange={(camp) => {
+                <Select style={{ width: 450, marginBottom: 20}} defaultValue={campanas[0]?.id || 1} placeholder='Selecciona una opción' onChange={(camp) => {
                     console.log('camp', camp);
                     setIdCampana(camp);
                     setCampSelected(true);
